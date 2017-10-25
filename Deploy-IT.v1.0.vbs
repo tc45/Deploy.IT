@@ -45,7 +45,7 @@ g_SCP_Password = "mypass123"											' SCP Password
 ' ** Log File Configuration
 g_Log_Enabled = True													' Enable/Disable Log File
 g_Log_DateStamp = True													' Prepend Date Stamp to each line in log file
-g_Log_DateStampFileName = False											' Add Date Stamp to log file name (unique file names)
+g_Log_DateStampFileName = FALSE											' Add Date Stamp to log file name (unique file names)
 g_Log_FileLocation = "C:\_Logs\"										' Log File directory (include trailing \)
 g_Log_FileName = crt.window.caption & "-logtofiletest2.txt"				' Log File Name
 g_Log_OverwriteOrAppend = "append"										' Append or Overwrite
@@ -664,9 +664,11 @@ Sub LogToFile(strMessage)
     If g_Log_DateStampFileName Then
         sNow = Replace(Replace(Now(),"/","-"),":",".")
         sLog_FileName = sNow & " - " & g_Log_FileName
-        g_Log_DateStampFileName		= False       
+        g_Log_DateStampFileName		= False      
+	Else
+		sLogFileName = g_Log_FileName
     End If
-
+ 
 	
     sLog_File = g_Log_FileLocation & sLog_FileName
    
