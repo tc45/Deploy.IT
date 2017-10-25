@@ -36,13 +36,12 @@ g_DeviceHostname = "corp-c3560cx-L2-sw1"								' Set to specify device hostname
 g_DeviceIOS	= "c3560cx-universalk9-tar.152-4.E.tar"						' Set to specify IOS image file
 g_DeviceIOSInstall = "Archive"											' Set to specify IOS image deployment type (Standard|Archive|Software Install)
 g_DeviceProvisioningIF = "VLAN1"										' Set to specify Provisioning interface (Gig0/1, Gig1/0/1/, Vlan1)
-g_DeviceFlash = "flash"													' Set to specify flash device name (e.g. flash, bootdisk, disk0, etc) -
-																		'				 (will set to flash if not specified)
+g_DeviceFlash = "flash"													' Set to specify flash device name (e.g. flash, bootdisk, disk0, etc) (will set to flash if not specified)
 g_SCP_Host = "10.1.1.1"													' Set to SCP Server hostname/IP for file transfer of IOS/config file
 g_SCP_Username = "provisioning"											' SCP Username
 g_SCP_Password = "mypass123"											' SCP Password
-					
-																		
+
+
 ' ** Log File Configuration
 g_Log_Enabled = True													' Enable/Disable Log File
 g_Log_DateStamp = True													' Prepend Date Stamp to each line in log file
