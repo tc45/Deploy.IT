@@ -591,12 +591,11 @@ Sub Get_InstallFiles ()
 	sResult = split(sResult,vbcrlf)
 	
 	
-	' ** Custom Date/Time details
-	sNow = Replace(Replace(Now(),"/","-"),":",".")
+	' ** Add date/time stamp to each line in the output from copying config to running
 	sresult3 = vbcrlf
 		
 	For each i in sResult
-		sResult3 = sResult3 & sNow & "   " & g_DeviceHostname & " - CONFIG INSTALL - " & i & vbCrlf
+		sResult3 = sResult3 & Now & "   " & g_DeviceHostname & " - CONFIG INSTALL - " & i & vbCrlf
 	next
 	
 	LogToFile (sresult3)
@@ -700,7 +699,7 @@ Sub LogToFile(strMessage)
         Set oLogFile = oLogFSO.OpenTextFile(sLog_File, ForWriting, True)
         g_Log_OverWriteOrAppend = "append"
     Else
-        Set oLogFile = oLogFSO.OpenTextFile(sLogFile, ForAppending, True)
+        Set oLogFile = oLogFSO.OpenTextFile(sLog_File, ForAppending, True)
     End If
  
     If g_Log_DateStamp Then
