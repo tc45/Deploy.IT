@@ -65,24 +65,23 @@ Sub Main
     end if
  
 	
-	Get_Arguments2
+	Get_Arguments
 	g_ConfigFileName = objFSO.GetFileName(g_ConfigFile)
 	'msgbox g_ConfigFileName
-	'g_DestinationFile = g_DestinationDirectory & g_ConfigFileName
-	'Call CopyFile (g_ConfigFile, g_DestinationFile)		
+	g_DestinationFile = g_DestinationDirectory & g_ConfigFileName
+	Call CopyFile (g_ConfigFile, g_DestinationFile)		
 	Get_Prompt 		' Get Command Prompt
 	if g_PromptExtension <> "#" Then Call Get_Enable											
-	'Get_PrepareDevice
-	'Get_ConfigDevice
-	'Get_VerifyIOS
-	'Get_CopySCPFiles
+	Get_PrepareDevice
+	Get_ConfigDevice
+	Get_VerifyIOS
+	Get_CopySCPFiles
 	Get_InstallFiles
 	SendCommand (g_LogToPrompt)
 	LogToFile ("  -------------- Script Completed ------------- ")
 	sLogToPrompt = Replace(g_LogToPrompt,vbcr,vbCrlf)
 	LogToFile (vbcrlf & vbcrlf & vbcrlf & sLogToPrompt)	
- 
-	LogToFile (g_DeviceHostname & " ==================== END LOG   =============================")
+	LogToFile (" ==================== END LOG   =============================")
 End Sub
 
 Sub Get_Prompt
@@ -180,10 +179,10 @@ Sub Get_Enable
  End Sub
  
 
-Sub Get_Arguments2()
+Sub Get_Arguments()
 	If crt.Arguments.Count = 1 Then
 	
-		If left(crt.Arguments(0),2) = "/h" Then
+		If left(crt.Arguments(0),2) = "/help" Then
 			' Display help menu
 			Dim sErrorMessage
 			sErrorMessage = "Install Pre-install.vbs" & vbcrlf & vbcrlf &_
@@ -252,25 +251,6 @@ Sub Get_Arguments2()
 	 
  End Sub
 
- 
- Sub Get_Arguments ()
- 
-	If crt.Arguments.Count = 0 Then
-		' Display help menu
-		Dim sErrorMessage
-		sErrorMessage = "Network Pre-Install.vbs" & vbcrlf & vbcrlf &_
-		"This script requires an argument to function properly. " & vbcrlf &_
-		"A configuration file must be specified." & vbcrlf & vbcrlf &_
-		"These items should be entered into individual strings using /arg to deliniate each one." & vbcrlf &_
-		"e.g. myscript.vbs /arg config.txt" & vbcrlf & vbcrlf
-		MsgBox sErrorMessage
-	 End If
-	 
-	If crt.Arguments.Count > 0 Then
-		g_ConfigFile = crt.Arguments(0)	 	 
-	End If 
-	 
- End Sub
 
 Sub Get_VerifyIOS
 	
@@ -355,7 +335,7 @@ Sub Get_PrepareDevice
  
 Sub Get_AnswerRebootPrompts ()
  
-	nResult = crt.screen.WaitForStrings ("Press RETURN to get started!", 240)
+	nResult = crt.screen.WaitForStrings ("Press RETURN to get started!", 600)
 	crt.sleep 10000			' Sleep 10 seconds
 	
 	' ** Send a few carriage returns after successful reboot.
@@ -581,11 +561,11 @@ Sub Get_InstallFiles ()
 	if nResult = 1 Then	crt.screen.send "y"
 	' ** If File is not found, write error to log.
 	if nResult = 3 Then LogToFile (g_DeviceHostname & " - CONFIG INSTALL - Configuration FAILED to running-config. - FAILED")
-	msgbox g_Prompt
+	'msgbox g_Prompt
 	sResult = crt.screen.ReadString (g_Prompt, 90)
 	if nResult <> 3 Then LogToFile (g_DeviceHostname & " - CONFIG INSTALL - Configuration copied to running-config.")
 	
-	msgBox sresult
+	'msgBox sresult
 	'msgBox nresult
 	sResult = split(sResult,vbcrlf)
 	
@@ -665,12 +645,8 @@ Sub LogToPrompt(strMessage)
  End Sub
 
  
- 
-
-
- 
 Sub LogToFile(strMessage)
-
+ 
    If g_Log_Enabled = False Then Exit Sub
  
     Const ForReading = 1
@@ -687,12 +663,12 @@ Sub LogToFile(strMessage)
    
     If g_Log_DateStampFileName Then
         sNow = Replace(Replace(Now(),"/","-"),":",".")
-        sLog_FileName = sNow & " - " & sLog_FileName
+        sLog_FileName = sNow & " - " & g_Log_FileName
         g_Log_DateStampFileName		= False       
     End If
 
 	
-    sLog_File = sLog_FileLocation & sLog_FileName
+    sLog_File = g_Log_FileLocation & sLog_FileName
    
     If g_Log_OverWriteOrAppend = "overwrite" Then
         Set oLogFile = oLogFSO.OpenTextFile(sLog_File, ForWriting, True)
