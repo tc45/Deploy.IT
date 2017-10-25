@@ -22,8 +22,8 @@
 
 
 Dim g_ConfigFile, g_DestinationDirectory, g_DestinationFile, g_DeviceType, g_Prompt, g_PromptExtension, g_ConfigFileName, g_LogToPrompt, g_UpdateIOSFile
-g_DestinationDirectory = "\\wcltdnsbnap1\D\DEVSETUP\"
-g_ConfigFile = "z:\UserFiles\tcurtis\Output Files\DE_CORP_Switch_L2_L3_Data\Sample Site 2 (L2)\oh-3560cx-L2-sw1.txt"
+g_DestinationDirectory = "\\server\share\directory\"
+g_ConfigFile = "z:\UserFiles\tcurtis\Output Files\CORP_Switch_L2_L3_Data\Sample Site 2 (L2)\corp-3560cx-L2-sw1.txt"
 
 
 Set objFSO = CreateObject("Scripting.FileSystemObject")
